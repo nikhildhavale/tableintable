@@ -18,12 +18,13 @@ class TableViewHolderView: UITableView {
     */
     override var contentSize: CGSize{
             didSet {
-                if oldValue.height != self.contentSize.height {
-                    invalidateIntrinsicContentSize()
-                }
+//                if oldValue.height != self.contentSize.height {
+//                }
+                invalidateIntrinsicContentSize()
+
             }
         }
-
+    var info:NSKeyValueObservation?
     init()
     {
         super.init(frame: .zero, style: .plain)
@@ -31,6 +32,9 @@ class TableViewHolderView: UITableView {
         self.dataSource = self
         self.separatorStyle = .none
         self.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+//        info =  self.observe(\TableViewHolderView.contentSize, options: .new){ tableView, change in
+//            tableView.invalidateIntrinsicContentSize()
+//        }
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -43,7 +47,7 @@ class TableViewHolderView: UITableView {
 extension TableViewHolderView:UITableViewDelegate,UITableViewDataSource
 {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tableViewCell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let tableViewCell = UITableViewCell()
         var config = tableViewCell.defaultContentConfiguration()
         let count = colorArray.count - 1
         config.image =  UIImage(systemName: "smallcircle.filled.circle.fill")?.withTintColor(colorArray[Int.random(in: 0...count)],renderingMode: .alwaysOriginal)
