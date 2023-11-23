@@ -11,7 +11,7 @@ class TestViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let holderView = TableViewHolderView(frame: .zero)
+        let holderView = TableViewHolderView()
         self.view.addSubview(holderView)
         holderView.translatesAutoresizingMaskIntoConstraints = false
         holderView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true

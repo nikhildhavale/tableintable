@@ -35,6 +35,7 @@ class TableViewController: UITableViewController {
         if let tableCell = cell as? TableViewCell
         {
             tableCell.update()
+            tableCell.layoutIfNeeded()
         }
 
         return cell

@@ -7,9 +7,8 @@
 
 import UIKit
 
-class TableViewHolderView: UIView {
+class TableViewHolderView: UITableView {
     let colorArray = [UIColor.systemRed,UIColor.systemBlue, UIColor.systemGreen, UIColor.systemYellow, UIColor.systemGray, UIColor.systemGray2, UIColor.secondaryLabel,UIColor.label,UIColor.opaqueSeparator];
-    var tableView: UITableView?
     /*
     // Only override draw() if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
@@ -17,35 +16,28 @@ class TableViewHolderView: UIView {
         // Drawing code
     }
     */
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        if self.tableView == nil
-        {
-            let tableView = UITableView(frame: .zero, style: .plain)
-            tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-            self.addSubview(tableView)
-            tableView.translatesAutoresizingMaskIntoConstraints = false
-            tableView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-            tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-            tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
-            tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
-            tableView.delegate = self
-            tableView.dataSource = self 
-            tableView.rowHeight = UITableView.automaticDimension
-            self.tableView = tableView
-            
+    override var contentSize: CGSize{
+            didSet {
+                if oldValue.height != self.contentSize.height {
+                    invalidateIntrinsicContentSize()
+                }
+            }
         }
-        
+
+    init()
+    {
+        super.init(frame: .zero, style: .plain)
+        self.delegate = self
+        self.dataSource = self
+        self.separatorStyle = .none
+        self.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
     }
-    
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
     override var intrinsicContentSize: CGSize{
-        if let contentSize = tableView?.contentSize {
-            return CGSize(width: UIScreen.main.bounds.width, height: contentSize.height)
-        }
-        return .zero
+        layoutIfNeeded()
+        return CGSize(width: UIScreen.main.bounds.width, height: contentSize.height)
     }
 }
 extension TableViewHolderView:UITableViewDelegate,UITableViewDataSource
@@ -57,6 +49,7 @@ extension TableViewHolderView:UITableViewDelegate,UITableViewDataSource
         config.image =  UIImage(systemName: "smallcircle.filled.circle.fill")?.withTintColor(colorArray[Int.random(in: 0...count)],renderingMode: .alwaysOriginal)
         config.text = "Text \(indexPath.row)"
         tableViewCell.contentConfiguration = config
+        tableViewCell.layoutIfNeeded()
         return tableViewCell
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

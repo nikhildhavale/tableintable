@@ -25,7 +25,7 @@ class TableViewCell: UITableViewCell {
     func update()
     {
         if tableHolderView == nil {
-            let holderView = TableViewHolderView(frame: .zero)
+            let holderView = TableViewHolderView()
             tableViewContainerView.addSubview(holderView)
             holderView.translatesAutoresizingMaskIntoConstraints = false
             holderView.topAnchor.constraint(equalTo: tableViewContainerView.topAnchor).isActive = true
