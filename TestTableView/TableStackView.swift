@@ -74,6 +74,14 @@ class ImageTextView:UIView
         label.numberOfLines = 0
         horizontalStackView.addArrangedSubview(imageview)
         horizontalStackView.addArrangedSubview(label)
+        let seperator = UIView(frame: .zero)
+        seperator.backgroundColor = .separator
+        seperator.translatesAutoresizingMaskIntoConstraints = false
+        seperator.heightAnchor.constraint(equalToConstant: 2).isActive = true
+        self.addSubview(seperator)
+        seperator.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        seperator.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
+        seperator.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true 
     }
     func updateUI()
     {
